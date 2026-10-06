@@ -1,0 +1,17 @@
+services:
+  nexojuris-postgres:
+    image: postgres:18-alpine
+    container_name: nexojuris-postgres
+    restart: always
+    environment:
+      POSTGRES_DB: nexojuris
+      POSTGRES_USER: nexojuris
+      POSTGRES_PASSWORD: nexojuris_secret
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql
+
+volumes:
+  pgdata:
+    driver: local

@@ -2,7 +2,14 @@
 
 **Compreenda direito. Conecte ideias.**
 
-Aplicação independente de estudo jurídico, integrada ao ForgeLex por API. Recorte inicial: Constituição Federal.
+Aplicação independente para estudar Direito de forma integrada a partir de uma pergunta central livre. Recorte legislativo inicial: Constituição Federal. Primeiro teste: controle de constitucionalidade.
+
+## Planejamento vigente
+
+- [Planejamento integral do site](docs/architecture/site-completo.md): framework, motores de pesquisa/IA, grafo, banco, hospedagem, cloud, domínio, contas, consumo, segurança, custos e operação.
+- [Especificação do núcleo](docs/superpowers/specs/2026-10-05-pesquisa-integrada-design.md) e [plano de implementação local](docs/superpowers/plans/2026-10-05-pesquisa-integrada.md).
+
+O NexoJuris é um produto novo, com infraestrutura e adaptadores próprios. Documentos anteriores que pressupõem integração com ForgeLex permanecem como histórico; não são requisitos do planejamento vigente. Tecnologias cloud e endereços no planejamento são propostas, não recursos contratados.
 
 ## Estado da fundação
 
@@ -29,6 +36,6 @@ O primeiro lockfile deve ser gerado e versionado após instalação bem-sucedida
 
 ## Integração
 
-Pesquisa STJ será consumida no servidor a partir do contrato ForgeLex. STF é uma expansão planejada do ForgeLex. Credenciais, saldos, dados privados e assinaturas não são compartilhados por pressuposição. Mercado Pago recorrente pertence à implementação do NexoJuris.
+Pesquisa jurídica será construída com acervo, grafo e adaptadores próprios de fontes autorizadas. Nenhuma infraestrutura, credencial, banco, conta ou saldo de outro produto é pressuposto. Mercado Pago recorrente pertence à implementação do NexoJuris.
 
 O símbolo atual é uma proposta PNG em contorno. Vetorização e simplificação da marca continuam previstas.
