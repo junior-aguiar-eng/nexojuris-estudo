@@ -48,6 +48,8 @@ export default function StudyWorkspace() {
   const [studying, setStudying] = useState(false);
   const [loading, setLoading] = useState(false);
   const [credits, setCredits] = useState(393);
+  const [showPlansModal, setShowPlansModal] = useState(false);
+  const [checkoutLoading, setCheckoutLoading] = useState(false);
   const [objective, setObjective] = useState<'compreender' | 'comparar_doutrina' | 'aplicar'>('compreender');
   const [study, setStudy] = useState<StudyData | null>(null);
   const [selectedConnection, setSelectedConnection] = useState<StudyConnection | null>(null);
@@ -116,6 +118,27 @@ export default function StudyWorkspace() {
     setTimeout(() => setSavedNotification(''), 4000);
   }
 
+  async function handlePurchasePlan(planId: string) {
+    setCheckoutLoading(true);
+    try {
+      const res = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ planId, userEmail: 'cliente@nexojuris.com.br' })
+      });
+      const data = await res.json();
+      if (data.initPoint) {
+        window.location.href = data.initPoint;
+      } else {
+        alert(data.message || 'Pedido comercial gerado!');
+      }
+    } catch (e: any) {
+      alert('Erro ao iniciar compra: ' + e.message);
+    } finally {
+      setCheckoutLoading(false);
+    }
+  }
+
   return (
     <div className="app-layout">
       {/* 1. Header Oficial (Print 1 & 2) */}
@@ -142,9 +165,15 @@ export default function StudyWorkspace() {
         <nav className="header-nav" aria-label="Navegação secundária">
           <a href="#institutos" className="nav-link">Institutos</a>
           <a href="#estudos" className="nav-link" onClick={(e) => { e.preventDefault(); handleSaveStudy(); }}>Meus estudos</a>
-          <div className="credit-badge">
-            <span>{credits} créditos</span>
-          </div>
+          <button 
+            type="button"
+            className="credit-badge" 
+            onClick={() => setShowPlansModal(true)}
+            title="Clique para ver planos comerciais e recarregar créditos"
+            style={{ cursor: 'pointer', border: 'none' }}
+          >
+            <span>💳 {credits} créditos · Planos</span>
+          </button>
         </nav>
       </header>
 
@@ -403,6 +432,72 @@ export default function StudyWorkspace() {
             </aside>
           </div>
         </main>
+      )}
+
+      {showPlansModal && (
+        <div className="plans-modal-overlay" onClick={() => setShowPlansModal(false)}>
+          <div className="plans-modal-card" onClick={(e) => e.stopPropagation()}>
+            <button 
+              className="plans-close-btn" 
+              onClick={() => setShowPlansModal(false)}
+              aria-label="Fechar"
+            >
+              ×
+            </button>
+            <div className="plans-header">
+              <h2>Planos Comerciais NexoJuris</h2>
+              <p>Adquira créditos de estudo para pesquisa jurídica integrada com Doutrina, CF/88 e Jurisprudência.</p>
+            </div>
+
+            <div className="plans-grid">
+              <div className="plan-item">
+                <div>
+                  <h3 className="plan-title">Estudante & OAB</h3>
+                  <div className="plan-price">R$ 29,90 <small>/pacote</small></div>
+                  <p className="plan-desc">100 créditos de pesquisa. Ideal para revisão temática de disciplinas e exames.</p>
+                </div>
+                <button 
+                  className="plan-buy-btn secondary"
+                  disabled={checkoutLoading}
+                  onClick={() => handlePurchasePlan('pack_100')}
+                >
+                  {checkoutLoading ? 'Processando...' : 'Comprar 100 créditos'}
+                </button>
+              </div>
+
+              <div className="plan-item popular">
+                <span className="plan-badge">Mais Escolhido</span>
+                <div>
+                  <h3 className="plan-title">Concurseiro Pro</h3>
+                  <div className="plan-price">R$ 79,90 <small>/pacote</small></div>
+                  <p className="plan-desc">500 créditos com alta prioridade de síntese no grafo jurídico e precedentes.</p>
+                </div>
+                <button 
+                  className="plan-buy-btn"
+                  disabled={checkoutLoading}
+                  onClick={() => handlePurchasePlan('pack_500')}
+                >
+                  {checkoutLoading ? 'Processando...' : 'Comprar 500 créditos'}
+                </button>
+              </div>
+
+              <div className="plan-item">
+                <div>
+                  <h3 className="plan-title">Escritório Ilimitado</h3>
+                  <div className="plan-price">R$ 149,90 <small>/mês</small></div>
+                  <p className="plan-desc">Acesso ilimitado a todas as conexões, teses jurisprudenciais e doutrina hermenêutica.</p>
+                </div>
+                <button 
+                  className="plan-buy-btn secondary"
+                  disabled={checkoutLoading}
+                  onClick={() => handlePurchasePlan('pack_unlimited')}
+                >
+                  {checkoutLoading ? 'Processando...' : 'Assinar Ilimitado'}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

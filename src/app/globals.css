@@ -701,3 +701,156 @@ a {
     font-size: 30px;
   }
 }
+
+/* Modal de Planos Comerciais */
+.plans-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 30, 36, 0.65);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.plans-modal-card {
+  background: #ffffff;
+  border-radius: 24px;
+  max-width: 860px;
+  width: 100%;
+  padding: 36px;
+  box-shadow: 0 24px 60px rgba(15, 76, 92, 0.22);
+  position: relative;
+  border: 1px solid var(--border-subtle);
+  animation: modalPop 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes modalPop {
+  from { opacity: 0; transform: scale(0.96) translateY(12px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.plans-close-btn {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  font-size: 26px;
+  line-height: 1;
+  color: var(--brand-muted);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.plans-close-btn:hover {
+  background: var(--brand-soft);
+  color: var(--brand-ink);
+}
+
+.plans-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+.plans-header h2 {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--brand-primary);
+  margin-bottom: 8px;
+}
+.plans-header p {
+  color: var(--brand-muted);
+  font-size: 14px;
+}
+
+.plans-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+@media (max-width: 768px) {
+  .plans-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.plan-item {
+  border: 1.5px solid var(--border-subtle);
+  border-radius: 18px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.2s ease;
+  background: #ffffff;
+}
+.plan-item.popular {
+  border-color: var(--brand-primary);
+  box-shadow: 0 8px 24px rgba(15, 76, 92, 0.12);
+  position: relative;
+}
+.plan-badge {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--brand-primary);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 12px;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.plan-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--brand-ink);
+  margin-bottom: 6px;
+}
+.plan-price {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--brand-primary);
+  margin: 12px 0 6px;
+}
+.plan-price small {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--brand-muted);
+}
+.plan-desc {
+  font-size: 13px;
+  color: var(--brand-muted);
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+.plan-buy-btn {
+  background: var(--brand-primary);
+  color: #ffffff;
+  padding: 12px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 14px;
+  width: 100%;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.plan-buy-btn:hover {
+  background: #146175;
+}
+.plan-buy-btn.secondary {
+  background: var(--brand-soft);
+  color: var(--brand-primary);
+}
+.plan-buy-btn.secondary:hover {
+  background: #d8eaee;
+}
+
